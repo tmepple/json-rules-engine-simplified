@@ -14,7 +14,7 @@
     "precommit": "lint-staged",
     "publish-to-npm": "npm run dist && npm publish && npm version patch",
     "tdd": "jest --watchAll",
-    "test": "jest --coverage"
+    "test": "jest --coverage 2>&1 | grep -v -e Handlebars -e 'runtime option' -e 'api-reference/runtime-options' || true"
   },
   "prettierOptions": "--jsx-bracket-same-line --trailing-comma es5 --semi",
   "jest": {

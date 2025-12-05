@@ -20,6 +20,10 @@ const doCheckField = (fieldVal, rule) => {
       } else if (p === NOT) {
         return !doCheckField(fieldVal, subRule);
       } else if (predicate[p]) {
+        // The 'matches' predicate expects (regex, value) instead of (value, regex)
+        if (p === "matches") {
+          return predicate[p](subRule, fieldVal);
+        }
         return predicate[p](fieldVal, subRule);
       } else {
         return false;

@@ -8,7 +8,7 @@ test("sanity checkField", function() {
 
 test("run predicate against array and elements", () => {
   let condition = {
-    options: "empty",
+    options: "empty"
   };
   expect(conditionsMeet(condition, [""])).toBeTruthy();
   expect(conditionsMeet(condition, [])).toBeTruthy();
@@ -17,8 +17,8 @@ test("run predicate against array and elements", () => {
 test("handles array of non-objects", () => {
   let condition = {
     options: {
-      contains: "foo",
-    },
+      contains: "foo"
+    }
   };
   expect(conditionsMeet(condition, { options: ["bar"] })).toBeFalsy();
   expect(conditionsMeet(condition, { options: [] })).toBeFalsy();
@@ -29,8 +29,8 @@ test("handles array of non-objects", () => {
 test("handles array of numbers", () => {
   let condition = {
     options: {
-      contains: 2,
-    },
+      contains: 2
+    }
   };
   expect(conditionsMeet(condition, { options: [1, 2] })).toBeTruthy();
   expect(conditionsMeet(condition, { options: [1] })).toBeFalsy();
@@ -39,7 +39,7 @@ test("handles array of numbers", () => {
 
 test("single line", () => {
   let condition = {
-    firstName: "empty",
+    firstName: "empty"
   };
   expect(conditionsMeet(condition, {})).toBeTruthy();
   expect(conditionsMeet(condition, { firstName: "some" })).toBeFalsy();
@@ -50,11 +50,11 @@ test("single line", () => {
 test("default use and", () => {
   let condition = {
     firstName: {
-      equal: "Will",
+      equal: "Will"
     },
     lastName: {
-      equal: "Smith",
-    },
+      equal: "Smith"
+    }
   };
   expect(conditionsMeet(condition, { firstName: "Will" })).toBeFalsy();
   expect(conditionsMeet(condition, { lastName: "Smith" })).toBeFalsy();
@@ -67,15 +67,29 @@ test("NOT condition", () => {
   let condition = {
     not: {
       firstName: {
-        equal: "Will",
-      },
-    },
+        equal: "Will"
+      }
+    }
   };
   expect(conditionsMeet(condition, { firstName: "Will" })).toBeFalsy();
   expect(conditionsMeet(condition, { firstName: "Smith" })).toBeTruthy();
   expect(
     conditionsMeet(condition, { firstName: "Will", lastName: "Smith" })
   ).toBeFalsy();
+});
+
+test("Regex condition", () => {
+  let condition = {
+    product: {
+      matches: /Cantilever/
+    }
+  };
+  expect(
+    conditionsMeet(condition, { product: "Step Bullnose 25" })
+  ).toBeFalsy();
+  expect(
+    conditionsMeet(condition, { product: "White Cantilever Step" })
+  ).toBeTruthy();
 });
 
 test("invalid condition", () => {

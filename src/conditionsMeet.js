@@ -5,6 +5,8 @@ import { OR, AND, NOT } from "./constants";
 export function toRelCondition(refCondition, formData) {
   if (Array.isArray(refCondition)) {
     return refCondition.map(cond => toRelCondition(cond, formData));
+  } else if (refCondition instanceof RegExp) {
+    return refCondition;
   } else if (isObject(refCondition)) {
     return Object.keys(refCondition).reduce((agg, field) => {
       agg[field] = toRelCondition(refCondition[field], formData);
@@ -35,8 +37,8 @@ export default function conditionsMeet(condition, formData) {
     } else {
       let refVal = selectRef(ref, formData);
       if (Array.isArray(refVal)) {
-        let condMeatOnce = refVal.some(
-          val => (isObject(val) ? conditionsMeet(refCondition, val) : false)
+        let condMeatOnce = refVal.some(val =>
+          isObject(val) ? conditionsMeet(refCondition, val) : false
         );
         // It's either true for an element in an array or for the whole array
         return (
