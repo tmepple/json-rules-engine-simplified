@@ -5,16 +5,18 @@
   "private": false,
   "author": "mavarazy@gmail.com",
   "scripts": {
-    "build:lib": "rimraf lib && cross-env NODE_ENV=production babel -d lib/ src/",
-    "build:dist": "rimraf dist && cross-env NODE_ENV=production webpack --config webpack.config.dist.js --optimize-minimize",
+    "build:lib": "babel -d lib/ src/",
+    "build:dist": "cross-env NODE_ENV=production webpack --config webpack.config.dist.js --optimize-minimize",
     "cs-check": "prettier -l $npm_package_prettierOptions '{src,test}/**/*.js'",
     "cs-format": "prettier $npm_package_prettierOptions '{src,test}/**/*.js' --write",
-    "dist": "npm run build:lib && npm run build:dist",
+    "dist": "npm run build:lib:prod && npm run build:dist",
     "lint": "eslint src test",
     "precommit": "lint-staged",
     "publish-to-npm": "npm run dist && npm publish && npm version patch",
     "tdd": "jest --watchAll",
-    "test": "jest --coverage 2>&1 | grep -v -e Handlebars -e 'runtime option' -e 'api-reference/runtime-options' || true"
+    "test": "jest --coverage 2>&1 | grep -v -e Handlebars -e 'runtime option' -e 'api-reference/runtime-options' || true",
+    "build:lib:prod": "cross-env NODE_ENV=production babel -d lib/ src/",
+    "clean": "rm -rf lib dist"
   },
   "prettierOptions": "--jsx-bracket-same-line --trailing-comma es5 --semi",
   "jest": {
