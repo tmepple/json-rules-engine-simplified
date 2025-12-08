@@ -92,6 +92,20 @@ test("Regex condition", () => {
   ).toBeTruthy();
 });
 
+test("Regex condition with String pattern", () => {
+  let condition = {
+    product: {
+      matches: "Cantilever"
+    }
+  };
+  expect(
+    conditionsMeet(condition, { product: "Step Bullnose 25" })
+  ).toBeFalsy();
+  expect(
+    conditionsMeet(condition, { product: "White Cantilever Step" })
+  ).toBeTruthy();
+});
+
 test("invalid condition", () => {
   expect(() => conditionsMeet("empty", {})).toThrow();
   expect(() => conditionsMeet({}, "empty")).toThrow();

@@ -21,9 +21,13 @@ const doCheckField = (fieldVal, rule) => {
         return !doCheckField(fieldVal, subRule);
       } else if (predicate[p]) {
         // The 'matches' predicate expects (regex, value) instead of (value, regex)
+        if (p === "matches" && typeof subRule === "string") {
+          subRule = new RegExp(subRule);
+        }
         if (p === "matches") {
           return predicate[p](subRule, fieldVal);
         }
+
         return predicate[p](fieldVal, subRule);
       } else {
         return false;
