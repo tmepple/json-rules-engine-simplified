@@ -27,7 +27,6 @@ const doCheckField = (fieldVal, rule) => {
         if (p === "matches") {
           return predicate[p](subRule, fieldVal);
         }
-
         return predicate[p](fieldVal, subRule);
       } else {
         return false;
