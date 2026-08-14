@@ -5,6 +5,7 @@
   "private": false,
   "author": "mavarazy@gmail.com",
   "scripts": {
+    "prepare": "npm run build:lib",
     "build:lib": "babel -d lib/ src/",
     "build:dist": "cross-env NODE_ENV=production webpack --config webpack.config.dist.js --optimize-minimize",
     "cs-check": "prettier -l $npm_package_prettierOptions '{src,test}/**/*.js'",
